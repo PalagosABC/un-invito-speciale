@@ -11,6 +11,7 @@
             box-sizing: border-box;
             margin: 0;
             padding: 0;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
@@ -28,13 +29,13 @@
             background: rgba(255, 255, 255, 0.95);
             border-radius: 24px;
             box-shadow: 0 10px 30px rgba(223, 168, 185, 0.3);
-            padding: 40px 30px;
+            padding: 35px 25px;
             width: 100%;
             max-width: 450px;
             text-align: center;
             transition: all 0.4s ease;
             position: relative;
-            min-height: 380px;
+            min-height: 400px;
             display: none;
             flex-direction: column;
             justify-content: center;
@@ -53,22 +54,22 @@
 
         .icon {
             font-size: 50px;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             display: block;
         }
 
         h2 {
             font-family: 'Playfair Display', serif;
             color: #5c3c45;
-            font-size: 26px;
-            margin-bottom: 15px;
+            font-size: 24px;
+            margin-bottom: 12px;
             line-height: 1.3;
         }
 
         p {
             color: #8c6d76;
-            font-size: 15px;
-            margin-bottom: 25px;
+            font-size: 14px;
+            margin-bottom: 20px;
         }
 
         .btn-container {
@@ -78,7 +79,7 @@
             align-items: center;
             width: 100%;
             margin-top: 10px;
-            min-height: 80px;
+            min-height: 100px;
             position: relative;
         }
 
@@ -92,6 +93,7 @@
             transition: transform 0.2s, background-color 0.2s;
             font-family: 'Poppins', sans-serif;
             text-decoration: none;
+            touch-action: manipulation;
         }
 
         .btn-yes {
@@ -109,34 +111,33 @@
         .btn-no {
             background-color: #bfa3ab;
             color: white;
-            transition: all 0.15s ease;
             z-index: 10;
         }
 
         .food-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 15px;
+            gap: 12px;
             width: 100%;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
         }
 
         .food-option {
             background: #fff5f7;
             border: 2px solid transparent;
             border-radius: 16px;
-            padding: 20px 10px;
+            padding: 15px 10px;
             cursor: pointer;
             transition: all 0.2s;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
+            touch-action: manipulation;
         }
 
         .food-option:hover {
             background: #ffe9ee;
-            transform: translateY(-2px);
         }
 
         .food-option.selected {
@@ -145,11 +146,11 @@
         }
 
         .food-emoji {
-            font-size: 32px;
+            font-size: 28px;
         }
 
         .food-name {
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 500;
             color: #5c3c45;
         }
@@ -157,7 +158,7 @@
         .inputs-container {
             width: 100%;
             text-align: left;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
         }
 
         label {
@@ -169,8 +170,15 @@
             padding-left: 4px;
         }
 
-        input[type="date"], input[type="time"] {
-            width: 100%;
+        /* Menu a tendina ottimizzati per il Touch dello Smartphone */
+        .select-group {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        select {
+            flex: 1;
             padding: 12px;
             border: 2px solid #ebd3d9;
             border-radius: 12px;
@@ -179,11 +187,18 @@
             color: #5c3c45;
             background-color: #fff;
             outline: none;
-            margin-bottom: 15px;
             transition: border-color 0.2s;
+            cursor: pointer;
+            appearance: none;
+            -webkit-appearance: none;
+            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6' fill='none'><path stroke='%237a5861' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M1 1l4 4 4-4'/></svg>");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            background-size: 12px;
+            padding-right: 30px;
         }
 
-        input:focus {
+        select:focus {
             border-color: #d65a7f;
         }
 
@@ -213,7 +228,7 @@
         <p>Prometto che sarà una bella serata!</p>
         <div class="btn-container" id="container-1">
             <button class="btn btn-yes" onclick="nextScreen(2)">SÌ ♥</button>
-            <button class="btn btn-no" id="no-button" onmouseover="escapeButton()" onclick="escapeButton()">No ➔</button>
+            <button class="btn btn-no" id="no-button" onmouseover="escapeButton()" ontouchstart="escapeButton(event)" onclick="escapeButton(event)">No ➔</button>
         </div>
     </div>
 
@@ -245,18 +260,52 @@
         <button class="btn btn-yes" onclick="validateScreen2()">Continua ➔</button>
     </div>
 
-    <!-- SCHERMATA 3: Data e Ora -->
+    <!-- SCHERMATA 3: Data e Ora (Versione Mobile-Friendly) -->
     <div class="card" id="screen-3">
         <span class="icon">📅</span>
         <h2>Quando sei libera?</h2>
         <p>Scegli il giorno e l'orario che preferisci ⏰</p>
         
         <div class="inputs-container">
-            <label for="date-input">Seleziona un giorno 🗓️</label>
-            <input type="date" id="date-input" required>
+            <label>Seleziona la data 🗓️</label>
+            <div class="select-group">
+                <select id="select-day">
+                    <option value="">Giorno</option>
+                    <!-- Generato via JS -->
+                </select>
+                <select id="select-month">
+                    <option value="">Mese</option>
+                    <option value="Gennaio">Gennaio</option>
+                    <option value="Febbraio">Febbraio</option>
+                    <option value="Marzo">Marzo</option>
+                    <option value="Aprile">Aprile</option>
+                    <option value="Maggio">Maggio</option>
+                    <option value="Giugno">Giugno</option>
+                    <option value="Luglio">Luglio</option>
+                    <option value="Agosto">Agosto</option>
+                    <option value="Settembre">Settembre</option>
+                    <option value="Ottobre">Ottobre</option>
+                    <option value="Novembre">Novembre</option>
+                    <option value="Dicembre">Dicembre</option>
+                </select>
+            </div>
 
-            <label for="time-input">A che ora? ⏰</label>
-            <input type="time" id="time-input" required>
+            <label>A che ora? ⏰</label>
+            <div class="select-group">
+                <select id="select-hour">
+                    <option value="">Ora</option>
+                    <option value="12">12</option><option value="13">13</option><option value="14">14</option>
+                    <option value="19">19</option><option value="20">20</option><option value="21">21</option>
+                    <option value="22">22</option>
+                </select>
+                <select id="select-minute">
+                    <option value="">Minuti</option>
+                    <option value="00">00</option>
+                    <option value="15">15</option>
+                    <option value="30">30</option>
+                    <option value="45">45</option>
+                </select>
+            </div>
         </div>
 
         <button class="btn btn-yes" onclick="submitData()">Conferma l'appuntamento ♥</button>
@@ -275,19 +324,30 @@
     <script>
         let selectedFood = '';
 
+        // Popola i giorni del mese (1-31) al caricamento
+        const daySelect = document.getElementById('select-day');
+        for (let i = 1; i <= 31; i++) {
+            let opt = document.createElement('option');
+            opt.value = i < 10 ? '0' + i : i;
+            opt.innerHTML = i;
+            daySelect.appendChild(opt);
+        }
+
         function nextScreen(screenNumber) {
             document.querySelectorAll('.card').forEach(card => card.classList.remove('active'));
             document.getElementById(`screen-${screenNumber}`).classList.add('active');
         }
 
-        function escapeButton() {
+        function escapeButton(e) {
+            if (e) e.preventDefault(); // Blocca lo zoom o click fantasma sui telefoni
+            
             const noBtn = document.getElementById('no-button');
             const card = document.getElementById('screen-1');
             
             const cardRect = card.getBoundingClientRect();
             const btnRect = noBtn.getBoundingClientRect();
             
-            const maxX = cardRect.width - btnRect.width - 40;
+            const maxX = cardRect.width - btnRect.width - 30;
             const maxY = cardRect.height - btnRect.height - 140;
             
             const randomX = Math.floor(Math.random() * maxX) - (maxX / 2);
@@ -313,21 +373,24 @@
             nextScreen(3);
         }
 
-        // Modificato per Web3Forms
         function submitData() {
-            const dateValue = document.getElementById('date-input').value;
-            const timeValue = document.getElementById('time-input').value;
+            const day = document.getElementById('select-day').value;
+            const month = document.getElementById('select-month').value;
+            const hour = document.getElementById('select-hour').value;
+            const minute = document.getElementById('select-minute').value;
 
-            if (!dateValue || !timeValue) {
-                alert('Per favore, seleziona sia la data che l\'orario! 🗓️');
+            if (!day || !month || !hour || !minute) {
+                alert('Per favore, seleziona tutti i campi della data e dell\'orario! 🗓️⏰');
                 return;
             }
 
-            const formattedDate = dateValue.split('-').reverse().join('/');
-            document.getElementById('form-date').value = formattedDate;
-            document.getElementById('form-time').value = timeValue;
+            const fullDate = `${day} ${month}`;
+            const fullTime = `${hour}:${minute}`;
 
-            document.getElementById('final-summary').innerHTML = `Grazie mille! Allora rimaniamo per <strong>${selectedFood}</strong>. Passi io a prenderti per le <strong>${timeValue}</strong> del <strong>${formattedDate}</strong>! 🏎️`;
+            document.getElementById('form-date').value = fullDate;
+            document.getElementById('form-time').value = fullTime;
+
+            document.getElementById('final-summary').innerHTML = `Grazie mille! Allora rimaniamo per <strong>${selectedFood}</strong>. Passo io a prenderti per le <strong>${fullTime}</strong> del <strong>${fullDate}</strong>! 🏎️`;
 
             nextScreen(4);
 
@@ -343,7 +406,7 @@
             })
             .then(response => {
                 if (response.ok) {
-                    console.log('Dati inviati con successo!');
+                    console.log('Inviato con successo!');
                 }
             })
             .catch(error => console.error('Errore:', error));
