@@ -98,8 +98,8 @@
             color: #5c3c45;
             font-size: 24px;
             line-height: 1.4;
-            margin-bottom: 20px;
-            margin-top: 20px; /* Aggiunge un po' di spazio in alto dato che non c'è l'icona */
+            margin-bottom: 25px;
+            margin-top: 20px;
         }
 
         .final-ps-text {
@@ -348,17 +348,17 @@
         <button class="btn btn-yes" onclick="submitData()">Conferma l'appuntamento ♥</button>
     </div>
 
-    <!-- SCHERMATA 4: Finale (Senza icona superiore e con testo corretto) -->
+    <!-- SCHERMATA 4: Finale (Nuovo testo esatto) -->
     <div class="card" id="screen-4">
         <div class="final-bold-text" id="final-summary">
-            Sono contento che tu non abbia detto di no. Fatti trovare pronta per le 00:00 passo io a prenderti🚗
+            Fatti trovare pronta per le 13:00 passo io a prenderti🏎️✨
         </div>
         <div class="final-ps-text">
             P.S. le persone normali mandano i messaggi. Io ho creato un sito web solo per te, niente di che.
         </div>
         <p style="font-weight: 500; color: #5c3c45; margin-bottom: 5px;">Un abbraccio,</p>
         <h2 style="font-family: 'Playfair Display', serif; font-size: 34px; color: #5c3c45; margin-bottom: 10px;">Ago</h2>
-        <div class="hearts">♥♥♥♥•</div>
+        <div class="hearts">♥♥♥♥♥</div>
     </div>
 
     <script>
@@ -429,8 +429,8 @@
             document.getElementById('form-date').value = fullDate;
             document.getElementById('form-time').value = fullTime;
 
-            // Aggiornamento dinamico della stringa finale con la variante "passo io a prenderti🚗"
-            document.getElementById('final-summary').innerHTML = `Sono contento che tu non abbia detto di no. Fatti trovare pronta per le <strong>${fullTime}</strong> passo io a prenderti🚗`;
+            // Aggiorna dinamicamente l'orario nell'ultima schermata inserendo quello scelto da lei
+            document.getElementById('final-summary').innerHTML = `Fatti trovare pronta per le <strong>${fullTime}</strong> passo io a prenderti🏎️✨`;
 
             nextScreen(4);
 
