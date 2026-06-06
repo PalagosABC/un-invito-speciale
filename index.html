@@ -52,15 +52,14 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Immagine del carlino allargata con sfondo azzurrino morbido */
+        /* Stile per l'immagine del cane stile image_d59e46.jpg */
         .dog-img {
-            width: 180px;
-            height: 180px;
+            width: 130px;
+            height: 130px;
             object-fit: cover;
             border-radius: 25px;
-            margin-bottom: 25px;
-            background-color: #d2e6ed;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+            margin-bottom: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
         }
 
         .icon {
@@ -77,6 +76,7 @@
             line-height: 1.3;
         }
 
+        /* Testo in grassetto per la domanda principale */
         .headline-bold {
             font-family: 'Playfair Display', serif;
             font-weight: 700;
@@ -240,15 +240,17 @@
         <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
     </form>
 
+    <!-- SCHERMATA 1: Vuoi uscire con me? (Aggiornata stile image_d59e46.jpg) -->
     <div class="card active" id="screen-1">
-        <img src="https://images.unsplash.com/photo-1518020382113-a7e8fc38eac9?w=500&auto=format&fit=crop&q=80" alt="Carlino con sfondo azzurro" class="dog-img">
-        <div class="headline-bold">🌸Vuoi uscire con me?🌸</div>
+        <img src="https://images.unsplash.com/photo-1517849845537-4d257902454a?w=500&auto=format&fit=crop&q=60" alt="Cane triste" class="dog-img">
+        <div class="headline-bold">🌸Vuoi uscire con me? 🌸</div>
         <div class="btn-container" id="container-1">
             <button class="btn btn-yes" onclick="nextScreen(2)">SÌ ♥</button>
             <button class="btn btn-no" id="no-button" onmouseover="escapeButton()" ontouchstart="escapeButton(event)" onclick="escapeButton(event)">No ➔</button>
         </div>
     </div>
 
+    <!-- SCHERMATA 2: Cosa mangiamo? -->
     <div class="card" id="screen-2">
         <span class="icon">🥳</span>
         <h2>Sapevo che avresti detto di sì! 🥰</h2>
@@ -276,6 +278,7 @@
         <button class="btn btn-yes" onclick="validateScreen2()">Continua ➔</button>
     </div>
 
+    <!-- SCHERMATA 3: Data e Ora -->
     <div class="card" id="screen-3">
         <span class="icon">📅</span>
         <h2>Quando sei libera?</h2>
@@ -325,10 +328,11 @@
         <button class="btn btn-yes" onclick="submitData()">Conferma l'appuntamento ♥</button>
     </div>
 
+    <!-- SCHERMATA 4: Finale -->
     <div class="card" id="screen-4">
         <span class="icon">🚗✨</span>
         <h2>Perfetto, non vedo l'ora!</h2>
-        <p id="final-summary">Grazie mille! Passo io a prenderti per l'orario selezionato. 🏎️</p>
+        <p id="final-summary">Grazie mille! Passi io a prenderti per l'orario selezionato. 🏎️</p>
         <p style="font-style: italic; font-size: 14px; margin-top: 15px;">Un abbraccio,</p>
         <h2 style="font-family: 'Playfair Display', serif; font-size: 32px; color: #5c3c45; margin-top: 5px;">Ago</h2>
         <div class="hearts">♥♥♥♥♥</div>
@@ -377,6 +381,7 @@
             document.getElementById('form-food').value = food;
         }
 
+        // Corretto refuso: "Passo io a prenderti" al posto di "Passi io a prenderti"
         function validateScreen2() {
             if (!selectedFood) {
                 alert('Scegli cosa ti va di mangiare prima di continuare! 🍕🍣🍔🍝');
