@@ -52,14 +52,14 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Stile per l'immagine del cane stile image_d59e46.jpg */
         .dog-img {
-            width: 130px;
-            height: 130px;
+            width: 180px;
+            height: 180px;
             object-fit: cover;
             border-radius: 25px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            margin-bottom: 25px;
+            background-color: #d2e6ed;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
         }
 
         .icon {
@@ -76,7 +76,6 @@
             line-height: 1.3;
         }
 
-        /* Testo in grassetto per la domanda principale */
         .headline-bold {
             font-family: 'Playfair Display', serif;
             font-weight: 700;
@@ -90,6 +89,26 @@
             color: #8c6d76;
             font-size: 14px;
             margin-bottom: 20px;
+        }
+
+        /* Stile specifico per i testi della schermata finale */
+        .final-bold-text {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            color: #5c3c45;
+            font-size: 24px;
+            line-height: 1.4;
+            margin-bottom: 20px;
+        }
+
+        .final-ps-text {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 400;
+            color: #8c6d76;
+            font-size: 14px;
+            font-style: italic;
+            line-height: 1.5;
+            margin-bottom: 25px;
         }
 
         .btn-container {
@@ -240,9 +259,8 @@
         <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
     </form>
 
-    <!-- SCHERMATA 1: Vuoi uscire con me? (Aggiornata stile image_d59e46.jpg) -->
     <div class="card active" id="screen-1">
-        <img src="https://images.unsplash.com/photo-1517849845537-4d257902454a?w=500&auto=format&fit=crop&q=60" alt="Cane triste" class="dog-img">
+        <img src="https://images.unsplash.com/photo-1518020382113-a7e8fc38eac9?w=500&auto=format&fit=crop&q=80" alt="Carlino con sfondo azzurro" class="dog-img">
         <div class="headline-bold">🌸Vuoi uscire con me?🌸</div>
         <div class="btn-container" id="container-1">
             <button class="btn btn-yes" onclick="nextScreen(2)">SÌ ♥</button>
@@ -250,7 +268,6 @@
         </div>
     </div>
 
-    <!-- SCHERMATA 2: Cosa mangiamo? -->
     <div class="card" id="screen-2">
         <span class="icon">🥳</span>
         <h2>Sapevo che avresti detto di sì! 🥰</h2>
@@ -278,7 +295,6 @@
         <button class="btn btn-yes" onclick="validateScreen2()">Continua ➔</button>
     </div>
 
-    <!-- SCHERMATA 3: Data e Ora -->
     <div class="card" id="screen-3">
         <span class="icon">📅</span>
         <h2>Quando sei libera?</h2>
@@ -328,13 +344,16 @@
         <button class="btn btn-yes" onclick="submitData()">Conferma l'appuntamento ♥</button>
     </div>
 
-    <!-- SCHERMATA 4: Finale -->
     <div class="card" id="screen-4">
-        <span class="icon">🚗✨</span>
-        <h2>Perfetto, non vedo l'ora!</h2>
-        <p id="final-summary">Grazie mille! Passi io a prenderti per l'orario selezionato. 🏎️</p>
-        <p style="font-style: italic; font-size: 14px; margin-top: 15px;">Un abbraccio,</p>
-        <h2 style="font-family: 'Playfair Display', serif; font-size: 32px; color: #5c3c45; margin-top: 5px;">Ago</h2>
+        <span class="icon">🏎️✨</span>
+        <div class="final-bold-text" id="final-summary">
+            Sono contento che tu non abbia detto di no. Fatti trovare pronta per le 00:00 vengo a prenderti 🚗
+        </div>
+        <div class="final-ps-text">
+            P.S. le persone normali mandano i messaggi. Io ho creato un sito web solo per te, niente di che.
+        </div>
+        <p style="font-weight: 500; color: #5c3c45; margin-bottom: 5px;">Un abbraccio,</p>
+        <h2 style="font-family: 'Playfair Display', serif; font-size: 34px; color: #5c3c45; margin-bottom: 10px;">Ago</h2>
         <div class="hearts">♥♥♥♥♥</div>
     </div>
 
@@ -381,7 +400,6 @@
             document.getElementById('form-food').value = food;
         }
 
-        // Corretto refuso: "Passo io a prenderti" al posto di "Passi io a prenderti"
         function validateScreen2() {
             if (!selectedFood) {
                 alert('Scegli cosa ti va di mangiare prima di continuare! 🍕🍣🍔🍝');
@@ -407,7 +425,8 @@
             document.getElementById('form-date').value = fullDate;
             document.getElementById('form-time').value = fullTime;
 
-            document.getElementById('final-summary').innerHTML = `Grazie mille! Allora rimaniamo per <strong>${selectedFood}</strong>. Passo io a prenderti per le <strong>${fullTime}</strong> del <strong>${fullDate}</strong>! 🏎️`;
+            // Inserisce dinamicamente l'orario scelto nel testo in grassetto richiesto
+            document.getElementById('final-summary').innerHTML = `Sono contento che tu non abbia detto di no. Fatti trovare pronta per le <strong>${fullTime}</strong> vengo a prenderti 🚗`;
 
             nextScreen(4);
 
