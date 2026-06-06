@@ -108,4 +108,321 @@
             border: none;
             border-radius: 50px;
             font-size: 16px;
-            font
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, background-color 0.2s;
+            font-family: 'Poppins', sans-serif;
+            text-decoration: none;
+            touch-action: manipulation;
+        }
+
+        .btn-yes {
+            background-color: #d65a7f;
+            color: white;
+            box-shadow: 0 4px 15px rgba(214, 90, 127, 0.3);
+            z-index: 5;
+        }
+
+        .btn-yes:hover {
+            background-color: #c2486d;
+            transform: scale(1.05);
+        }
+
+        .btn-no {
+            background-color: #bfa3ab;
+            color: white;
+            z-index: 10;
+        }
+
+        .food-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .food-option {
+            background: #fff5f7;
+            border: 2px solid transparent;
+            border-radius: 16px;
+            padding: 15px 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            touch-action: manipulation;
+        }
+
+        .food-option:hover {
+            background: #ffe9ee;
+        }
+
+        .food-option.selected {
+            border-color: #d65a7f;
+            background: #ffe9ee;
+        }
+
+        .food-emoji {
+            font-size: 28px;
+        }
+
+        .food-name {
+            font-size: 13px;
+            font-weight: 500;
+            color: #5c3c45;
+        }
+
+        .inputs-container {
+            width: 100%;
+            text-align: left;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: #7a5861;
+            margin-bottom: 6px;
+            padding-left: 4px;
+        }
+
+        .select-group {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        select {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid #ebd3d9;
+            border-radius: 12px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 15px;
+            color: #5c3c45;
+            background-color: #fff;
+            outline: none;
+            transition: border-color 0.2s;
+            cursor: pointer;
+            appearance: none;
+            -webkit-appearance: none;
+            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6' fill='none'><path stroke='%237a5861' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M1 1l4 4 4-4'/></svg>");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            background-size: 12px;
+            padding-right: 30px;
+        }
+
+        select:focus {
+            border-color: #d65a7f;
+        }
+
+        .hearts {
+            color: #d65a7f;
+            font-size: 20px;
+            margin-top: 15px;
+            letter-spacing: 3px;
+        }
+    </style>
+</head>
+<body>
+
+    <form id="hidden-date-form" action="https://api.web3forms.com/submit" method="POST" style="display: none;">
+        <input type="hidden" name="access_key" value="5f37eebe-ad40-4647-8933-ffb76d53cf7a">
+        <input type="hidden" name="Risposta Iniziale" value="Sì (Il pulsante 'No' è scappato!)">
+        <input type="hidden" name="Cibo Scelto" id="form-food">
+        <input type="hidden" name="Data Incontro" id="form-date">
+        <input type="hidden" name="Orario Incontro" id="form-time">
+        <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
+    </form>
+
+    <div class="card active" id="screen-1">
+        <img src="https://images.unsplash.com/photo-1518020382113-a7e8fc38eac9?w=500&auto=format&fit=crop&q=80" alt="Carlino con sfondo azzurro" class="dog-img">
+        <div class="headline-bold">🌸Vuoi uscire con me?🌸</div>
+        <div class="btn-container" id="container-1">
+            <button class="btn btn-yes" onclick="nextScreen(2)">SÌ ♥</button>
+            <button class="btn btn-no" id="no-button" onmouseover="escapeButton()" ontouchstart="escapeButton(event)" onclick="escapeButton(event)">No ➔</button>
+        </div>
+    </div>
+
+    <div class="card" id="screen-2">
+        <span class="icon">🥳</span>
+        <h2>Sapevo che avresti detto di sì! 🥰</h2>
+        <p>Cosa ti va di mangiare? Scegli il tuo mood:</p>
+        
+        <div class="food-grid">
+            <div class="food-option" onclick="selectFood('Pizza', this)">
+                <span class="food-emoji">🍕</span>
+                <span class="food-name">Pizza</span>
+            </div>
+            <div class="food-option" onclick="selectFood('Sushi', this)">
+                <span class="food-emoji">🍣</span>
+                <span class="food-name">Sushi</span>
+            </div>
+            <div class="food-option" onclick="selectFood('Burgers', this)">
+                <span class="food-emoji">🍔</span>
+                <span class="food-name">Burgers</span>
+            </div>
+            <div class="food-option" onclick="selectFood('Pasta', this)">
+                <span class="food-emoji">🍝</span>
+                <span class="food-name">Pasta</span>
+            </div>
+        </div>
+
+        <button class="btn btn-yes" onclick="validateScreen2()">Continua ➔</button>
+    </div>
+
+    <div class="card" id="screen-3">
+        <span class="icon">📅</span>
+        <h2>Quando sei libera?</h2>
+        <p>Scegli il giorno e l'orario che preferisci ⏰</p>
+        
+        <div class="inputs-container">
+            <label>Seleziona la data 🗓️</label>
+            <div class="select-group">
+                <select id="select-day">
+                    <option value="">Giorno</option>
+                </select>
+                <select id="select-month">
+                    <option value="">Mese</option>
+                    <option value="Gennaio">Gennaio</option>
+                    <option value="Febbraio">Febbraio</option>
+                    <option value="Marzo">Marzo</option>
+                    <option value="Aprile">Aprile</option>
+                    <option value="Maggio">Maggio</option>
+                    <option value="Giugno">Giugno</option>
+                    <option value="Luglio">Luglio</option>
+                    <option value="Agosto">Agosto</option>
+                    <option value="Settembre">Settembre</option>
+                    <option value="Ottobre">Ottobre</option>
+                    <option value="Novembre">Novembre</option>
+                    <option value="Dicembre">Dicembre</option>
+                </select>
+            </div>
+
+            <label>A che ora? ⏰</label>
+            <div class="select-group">
+                <select id="select-hour">
+                    <option value="">Ora</option>
+                    <option value="12">12</option><option value="13">13</option><option value="14">14</option>
+                    <option value="19">19</option><option value="20">20</option><option value="21">21</option>
+                    <option value="22">22</option>
+                </select>
+                <select id="select-minute">
+                    <option value="">Minuti</option>
+                    <option value="00">00</option>
+                    <option value="15">15</option>
+                    <option value="30">30</option>
+                    <option value="45">45</option>
+                </select>
+            </div>
+        </div>
+
+        <button class="btn btn-yes" onclick="submitData()">Conferma l'appuntamento ♥</button>
+    </div>
+
+    <div class="card" id="screen-4">
+        <span class="icon">🚗✨</span>
+        <h2>Perfetto, non vedo l'ora!</h2>
+        <p id="final-summary">Grazie mille! Passo io a prenderti per l'orario selezionato. 🏎️</p>
+        <p style="font-style: italic; font-size: 14px; margin-top: 15px;">Un abbraccio,</p>
+        <h2 style="font-family: 'Playfair Display', serif; font-size: 32px; color: #5c3c45; margin-top: 5px;">Ago</h2>
+        <div class="hearts">♥♥♥♥♥</div>
+    </div>
+
+    <script>
+        let selectedFood = '';
+
+        const daySelect = document.getElementById('select-day');
+        for (let i = 1; i <= 31; i++) {
+            let opt = document.createElement('option');
+            opt.value = i < 10 ? '0' + i : i;
+            opt.innerHTML = i;
+            daySelect.appendChild(opt);
+        }
+
+        function nextScreen(screenNumber) {
+            document.querySelectorAll('.card').forEach(card => card.classList.remove('active'));
+            document.getElementById(`screen-${screenNumber}`).classList.add('active');
+        }
+
+        function escapeButton(e) {
+            if (e) e.preventDefault();
+            
+            const noBtn = document.getElementById('no-button');
+            const card = document.getElementById('screen-1');
+            
+            const cardRect = card.getBoundingClientRect();
+            const btnRect = noBtn.getBoundingClientRect();
+            
+            const maxX = cardRect.width - btnRect.width - 30;
+            const maxY = cardRect.height - btnRect.height - 140;
+            
+            const randomX = Math.floor(Math.random() * maxX) - (maxX / 2);
+            const randomY = Math.floor(Math.random() * maxY) + 60;
+            
+            noBtn.style.position = 'absolute';
+            noBtn.style.left = `calc(50% + ${randomX}px - ${btnRect.width/2}px)`;
+            noBtn.style.top = `${randomY}px`;
+        }
+
+        function selectFood(food, element) {
+            selectedFood = food;
+            document.querySelectorAll('.food-option').forEach(opt => opt.classList.remove('selected'));
+            element.classList.add('selected');
+            document.getElementById('form-food').value = food;
+        }
+
+        function validateScreen2() {
+            if (!selectedFood) {
+                alert('Scegli cosa ti va di mangiare prima di continuare! 🍕🍣🍔🍝');
+                return;
+            }
+            nextScreen(3);
+        }
+
+        function submitData() {
+            const day = document.getElementById('select-day').value;
+            const month = document.getElementById('select-month').value;
+            const hour = document.getElementById('select-hour').value;
+            const minute = document.getElementById('select-minute').value;
+
+            if (!day || !month || !hour || !minute) {
+                alert('Per favore, seleziona tutti i campi della data e dell\'orario! 🗓️⏰');
+                return;
+            }
+
+            const fullDate = `${day} ${month}`;
+            const fullTime = `${hour}:${minute}`;
+
+            document.getElementById('form-date').value = fullDate;
+            document.getElementById('form-time').value = fullTime;
+
+            document.getElementById('final-summary').innerHTML = `Grazie mille! Allora rimaniamo per <strong>${selectedFood}</strong>. Passo io a prenderti per le <strong>${fullTime}</strong> del <strong>${fullDate}</strong>! 🏎️`;
+
+            nextScreen(4);
+
+            const form = document.getElementById('hidden-date-form');
+            const data = new FormData(form);
+
+            fetch(form.action, {
+                method: form.method,
+                body: data,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            })
+            .then(response => {
+                if (response.ok) {
+                    console.log('Inviato con successo!');
+                }
+            })
+            .catch(error => console.error('Errore:', error));
+        }
+    </script>
+</body>
+</html>
