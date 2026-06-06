@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Un invito speciale ✨</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght=0,600;1,400&family=Poppins:wght=400;500;600&display=swap');
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #ffeef2 0%, #f5d6df 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+            padding: 20px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 24px;
+            box-shadow: 0 10px 30px rgba(223, 168, 185, 0.3);
+            padding: 40px 30px;
+            width: 100%;
+            max-width: 450px;
+            text-align: center;
+            transition: all 0.4s ease;
+            position: relative;
+            min-height: 380px;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .card.active {
+            display: flex;
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .icon {
+            font-size: 50px;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        h2 {
+            font-family: 'Playfair Display', serif;
+            color: #5c3c45;
+            font-size: 26px;
+            margin-bottom: 15px;
+            line-height: 1.3;
+        }
+
+        p {
+            color: #8c6d76;
+            font-size: 15px;
+            margin-bottom: 25px;
+        }
+
+        .btn-container {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            margin-top: 10px;
+            min-height: 80px;
+            position: relative;
+        }
+
+        .btn {
+            padding: 12px 28px;
+            border: none;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, background-color 0.2s;
+            font-family: 'Poppins', sans-serif;
+            text-decoration: none;
+        }
+
+        .btn-yes {
+            background-color: #d65a7f;
+            color: white;
+            box-shadow: 0 4px 15px rgba(214, 90, 127, 0.3);
+            z-index: 5;
+        }
+
+        .btn-yes:hover {
+            background-color: #c2486d;
+            transform: scale(1.05);
+        }
+
+        .btn-no {
+            background-color: #bfa3ab;
+            color: white;
+            transition: all 0.15s ease;
+            z-index: 10;
+        }
+
+        .food-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            width: 100%;
+            margin-bottom: 25px;
+        }
+
+        .food-option {
+            background: #fff5f7;
+            border: 2px solid transparent;
+            border-radius: 16px;
+            padding: 20px 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .food-option:hover {
+            background: #ffe9ee;
+            transform: translateY(-2px);
+        }
+
+        .food-option.selected {
+            border-color: #d65a7f;
+            background: #ffe9ee;
+        }
+
+        .food-emoji {
+            font-size: 32px;
+        }
+
+        .food-name {
+            font-size: 14px;
+            font-weight: 500;
+            color: #5c3c45;
+        }
+
+        .inputs-container {
+            width: 100%;
+            text-align: left;
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: #7a5861;
+            margin-bottom: 6px;
+            padding-left: 4px;
+        }
+
+        input[type="date"], input[type="time"] {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ebd3d9;
+            border-radius: 12px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 15px;
+            color: #5c3c45;
+            background-color: #fff;
+            outline: none;
+            margin-bottom: 15px;
+            transition: border-color 0.2s;
+        }
+
+        input:focus {
+            border-color: #d65a7f;
+        }
+
+        .hearts {
+            color: #d65a7f;
+            font-size: 20px;
+            margin-top: 15px;
+            letter-spacing: 3px;
+        }
+    </style>
+</head>
+<body>
+
+    <form id="hidden-date-form" action="https://api.web3forms.com/submit" method="POST" style="display: none;">
+        <input type="hidden" name="access_key" value="5f37eebe-ad40-4647-8933-ffb76d53cf7a">
+        <input type="hidden" name="Risposta Iniziale" value="Sì (Il pulsante 'No' è scappato!)">
+        <input type="hidden" name="Cibo Scelto" id="form-food">
+        <input type="hidden" name="Data Incontro" id="form-date">
+        <input type="hidden" name="Orario Incontro" id="form-time">
+        <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
+    </form>
+
+    <!-- SCHERMATA 1: Vuoi uscire con me? -->
+    <div class="card active" id="screen-1">
+        <span class="icon">🌸</span>
+        <h2>Vuoi uscire con me? 🌸</h2>
+        <p>Prometto che sarà una bella serata!</p>
+        <div class="btn-container" id="container-1">
+            <button class="btn btn-yes" onclick="nextScreen(2)">SÌ ♥</button>
+            <button class="btn btn-no" id="no-button" onmouseover="escapeButton()" onclick="escapeButton()">No ➔</button>
+        </div>
+    </div>
+
+    <!-- SCHERMATA 2: Cosa mangiamo? -->
+    <div class="card" id="screen-2">
+        <span class="icon">🥳</span>
+        <h2>Sapevo che avresti detto di sì! 🥰</h2>
+        <p>Cosa ti va di mangiare? Scegli il tuo mood:</p>
+        
+        <div class="food-grid">
+            <div class="food-option" onclick="selectFood('Pizza', this)">
+                <span class="food-emoji">🍕</span>
+                <span class="food-name">Pizza</span>
+            </div>
+            <div class="food-option" onclick="selectFood('Sushi', this)">
+                <span class="food-emoji">🍣</span>
+                <span class="food-name">Sushi</span>
+            </div>
+            <div class="food-option" onclick="selectFood('Burgers', this)">
+                <span class="food-emoji">🍔</span>
+                <span class="food-name">Burgers</span>
+            </div>
+            <div class="food-option" onclick="selectFood('Pasta', this)">
+                <span class="food-emoji">🍝</span>
+                <span class="food-name">Pasta</span>
+            </div>
+        </div>
+
+        <button class="btn btn-yes" onclick="validateScreen2()">Continua ➔</button>
+    </div>
+
+    <!-- SCHERMATA 3: Data e Ora -->
+    <div class="card" id="screen-3">
+        <span class="icon">📅</span>
+        <h2>Quando sei libera?</h2>
+        <p>Scegli il giorno e l'orario che preferisci ⏰</p>
+        
+        <div class="inputs-container">
+            <label for="date-input">Seleziona un giorno 🗓️</label>
+            <input type="date" id="date-input" required>
+
+            <label for="time-input">A che ora? ⏰</label>
+            <input type="time" id="time-input" required>
+        </div>
+
+        <button class="btn btn-yes" onclick="submitData()">Conferma l'appuntamento ♥</button>
+    </div>
+
+    <!-- SCHERMATA 4: Finale -->
+    <div class="card" id="screen-4">
+        <span class="icon">🚗✨</span>
+        <h2>Perfetto, non vedo l'ora!</h2>
+        <p id="final-summary">Grazie mille! Passi io a prenderti per l'orario selezionato. 🏎️</p>
+        <p style="font-style: italic; font-size: 14px; margin-top: 15px;">Un abbraccio,</p>
+        <h2 style="font-family: 'Playfair Display', serif; font-size: 32px; color: #5c3c45; margin-top: 5px;">Ago</h2>
+        <div class="hearts">♥♥♥♥♥</div>
+    </div>
+
+    <script>
+        let selectedFood = '';
+
+        function nextScreen(screenNumber) {
+            document.querySelectorAll('.card').forEach(card => card.classList.remove('active'));
+            document.getElementById(`screen-${screenNumber}`).classList.add('active');
+        }
+
+        function escapeButton() {
+            const noBtn = document.getElementById('no-button');
+            const card = document.getElementById('screen-1');
+            
+            const cardRect = card.getBoundingClientRect();
+            const btnRect = noBtn.getBoundingClientRect();
+            
+            const maxX = cardRect.width - btnRect.width - 40;
+            const maxY = cardRect.height - btnRect.height - 140;
+            
+            const randomX = Math.floor(Math.random() * maxX) - (maxX / 2);
+            const randomY = Math.floor(Math.random() * maxY) + 60;
+            
+            noBtn.style.position = 'absolute';
+            noBtn.style.left = `calc(50% + ${randomX}px - ${btnRect.width/2}px)`;
+            noBtn.style.top = `${randomY}px`;
+        }
+
+        function selectFood(food, element) {
+            selectedFood = food;
+            document.querySelectorAll('.food-option').forEach(opt => opt.classList.remove('selected'));
+            element.classList.add('selected');
+            document.getElementById('form-food').value = food;
+        }
+
+        function validateScreen2() {
+            if (!selectedFood) {
+                alert('Scegli cosa ti va di mangiare prima di continuare! 🍕🍣🍔🍝');
+                return;
+            }
+            nextScreen(3);
+        }
+
+        // Modificato per Web3Forms
+        function submitData() {
+            const dateValue = document.getElementById('date-input').value;
+            const timeValue = document.getElementById('time-input').value;
+
+            if (!dateValue || !timeValue) {
+                alert('Per favore, seleziona sia la data che l\'orario! 🗓️');
+                return;
+            }
+
+            const formattedDate = dateValue.split('-').reverse().join('/');
+            document.getElementById('form-date').value = formattedDate;
+            document.getElementById('form-time').value = timeValue;
+
+            document.getElementById('final-summary').innerHTML = `Grazie mille! Allora rimaniamo per <strong>${selectedFood}</strong>. Passi io a prenderti per le <strong>${timeValue}</strong> del <strong>${formattedDate}</strong>! 🏎️`;
+
+            nextScreen(4);
+
+            const form = document.getElementById('hidden-date-form');
+            const data = new FormData(form);
+
+            fetch(form.action, {
+                method: form.method,
+                body: data,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            })
+            .then(response => {
+                if (response.ok) {
+                    console.log('Dati inviati con successo!');
+                }
+            })
+            .catch(error => console.error('Errore:', error));
+        }
+    </script>
+</body>
+</html>
