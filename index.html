@@ -91,7 +91,6 @@
             margin-bottom: 20px;
         }
 
-        /* Stile specifico per i testi della schermata finale */
         .final-bold-text {
             font-family: 'Playfair Display', serif;
             font-weight: 700;
@@ -348,13 +347,13 @@
         <button class="btn btn-yes" onclick="submitData()">Conferma l'appuntamento ♥</button>
     </div>
 
-    <!-- SCHERMATA 4: Finale (Nuovo testo esatto) -->
+    <!-- SCHERMATA 4: Finale (Aggiornata con i tuoi testi precisi) -->
     <div class="card" id="screen-4">
         <div class="final-bold-text" id="final-summary">
-            Fatti trovare pronta per le 13:00 passo io a prenderti🏎️✨
+            Fatti trovare pronta per le 13:00 passo io a prenderti 🏎️✨
         </div>
         <div class="final-ps-text">
-            P.S. le persone normali mandano i messaggi. Io ho creato un sito web solo per te, niente di che.
+            P.S. Le persone normali mandano un semplice messaggio... ma ci tenevo troppo a farti una sorpresa, così ho programmato questo solo per te! 😉
         </div>
         <p style="font-weight: 500; color: #5c3c45; margin-bottom: 5px;">Un abbraccio,</p>
         <h2 style="font-family: 'Playfair Display', serif; font-size: 34px; color: #5c3c45; margin-bottom: 10px;">Ago</h2>
@@ -429,8 +428,8 @@
             document.getElementById('form-date').value = fullDate;
             document.getElementById('form-time').value = fullTime;
 
-            // Aggiorna dinamicamente l'orario nell'ultima schermata inserendo quello scelto da lei
-            document.getElementById('final-summary').innerHTML = `Fatti trovare pronta per le <strong>${fullTime}</strong> passo io a prenderti🏎️✨`;
+            // Inserisce dinamicamente l'orario inserito da lei
+            document.getElementById('final-summary').innerHTML = `Fatti trovare pronta per le <strong>${fullTime}</strong> passo io a prenderti 🏎️✨`;
 
             nextScreen(4);
 
