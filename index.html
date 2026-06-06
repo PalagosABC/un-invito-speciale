@@ -99,6 +99,7 @@
             font-size: 24px;
             line-height: 1.4;
             margin-bottom: 20px;
+            margin-top: 20px; /* Aggiunge un po' di spazio in alto dato che non c'è l'icona */
         }
 
         .final-ps-text {
@@ -259,6 +260,7 @@
         <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
     </form>
 
+    <!-- SCHERMATA 1: Vuoi uscire con me? -->
     <div class="card active" id="screen-1">
         <img src="https://images.unsplash.com/photo-1518020382113-a7e8fc38eac9?w=500&auto=format&fit=crop&q=80" alt="Carlino con sfondo azzurro" class="dog-img">
         <div class="headline-bold">🌸Vuoi uscire con me?🌸</div>
@@ -268,6 +270,7 @@
         </div>
     </div>
 
+    <!-- SCHERMATA 2: Cosa mangiamo? -->
     <div class="card" id="screen-2">
         <span class="icon">🥳</span>
         <h2>Sapevo che avresti detto di sì! 🥰</h2>
@@ -295,6 +298,7 @@
         <button class="btn btn-yes" onclick="validateScreen2()">Continua ➔</button>
     </div>
 
+    <!-- SCHERMATA 3: Data e Ora -->
     <div class="card" id="screen-3">
         <span class="icon">📅</span>
         <h2>Quando sei libera?</h2>
@@ -344,17 +348,17 @@
         <button class="btn btn-yes" onclick="submitData()">Conferma l'appuntamento ♥</button>
     </div>
 
+    <!-- SCHERMATA 4: Finale (Senza icona superiore e con testo corretto) -->
     <div class="card" id="screen-4">
-        <span class="icon">🏎️✨</span>
         <div class="final-bold-text" id="final-summary">
-            Sono contento che tu non abbia detto di no. Fatti trovare pronta per le 00:00 vengo a prenderti 🚗
+            Sono contento che tu non abbia detto di no. Fatti trovare pronta per le 00:00 passo io a prenderti🚗
         </div>
         <div class="final-ps-text">
             P.S. le persone normali mandano i messaggi. Io ho creato un sito web solo per te, niente di che.
         </div>
         <p style="font-weight: 500; color: #5c3c45; margin-bottom: 5px;">Un abbraccio,</p>
         <h2 style="font-family: 'Playfair Display', serif; font-size: 34px; color: #5c3c45; margin-bottom: 10px;">Ago</h2>
-        <div class="hearts">♥♥♥♥♥</div>
+        <div class="hearts">♥♥♥♥•</div>
     </div>
 
     <script>
@@ -425,8 +429,8 @@
             document.getElementById('form-date').value = fullDate;
             document.getElementById('form-time').value = fullTime;
 
-            // Inserisce dinamicamente l'orario scelto nel testo in grassetto richiesto
-            document.getElementById('final-summary').innerHTML = `Sono contento che tu non abbia detto di no. Fatti trovare pronta per le <strong>${fullTime}</strong> vengo a prenderti 🚗`;
+            // Aggiornamento dinamico della stringa finale con la variante "passo io a prenderti🚗"
+            document.getElementById('final-summary').innerHTML = `Sono contento che tu non abbia detto di no. Fatti trovare pronta per le <strong>${fullTime}</strong> passo io a prenderti🚗`;
 
             nextScreen(4);
 
